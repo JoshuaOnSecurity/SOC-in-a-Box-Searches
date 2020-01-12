@@ -17,10 +17,6 @@ sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 (process_name="hh.exe" OR file_path="*.chm*")
 | table _time process, cmdline, parent_process, ParentCommandLine, user, host
 ```
-Input Source: Powershell
-```
-
-```
 
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.

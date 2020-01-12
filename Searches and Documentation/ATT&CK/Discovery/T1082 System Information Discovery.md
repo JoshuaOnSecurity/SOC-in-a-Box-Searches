@@ -19,15 +19,6 @@ sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 OR (process_name="reg.exe" AND cmdline="*HKLM\\SYSTEM\\CurrentControlSet\\Services\\Disk\\Enum*") 
 | table _time process_name, cmdline, parent_process, user, host
 ```
-Input Source: Powershell  
-Message="*set*" May return a lot of results and require filtering.
-```
-index=powershell_logs
-(Message="*systeminfo*")
-OR (Message="*reg*" AND Message="*query*" AND "*HKLM\SYSTEM\CurrentControlSet\Services\Disk\Enum*") 
-OR (Message="*set*") 
-| table _time EventCode Message host
-```
 
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.

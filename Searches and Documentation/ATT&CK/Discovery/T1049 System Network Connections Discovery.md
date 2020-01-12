@@ -24,19 +24,7 @@ OR (process_name="net1.exe" AND cmdline="*sessions*")
 OR (process_name="net1.exe" AND cmdline="*file*")
 | table _time process_name, cmdline, parent_process, user, host
 ```
-Input Source: Powershell
-```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(process_name="netstat.exe") 
-OR (Message="*net*" AND Message="*use*")
-OR (Message="*net*" AND Message="*sessions*")
-OR (Message="*net*" AND Message="*file*")
-OR (Message="*net1*" AND Message="*use*")
-OR (Message="*net1*" AND Message="*sessions*")
-OR (Message="*net1*" AND Message="*file*")
-OR (Message=""*Get-NetTCPConnection*"")
-| table _time EventCode Message host
-```
+
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.
 

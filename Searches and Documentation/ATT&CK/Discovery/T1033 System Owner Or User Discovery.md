@@ -29,16 +29,7 @@ OR (process_name="quser.exe")
 OR (wmic.exe AND cmdline="*useraccount*")
 | table  _time process, cmdline, parent_process, user, host
 ```
-Input Source: Powershell  
-```
-index=powershell_logs
-(Message="*whoami*")
-OR (Message="*hostname*")
-OR (Message="*query session*")
-OR (Message="*quser*")
-OR (Message="*wmic*" AND Message="*useraccount*")
-| table _time EventCode Message host
-```
+
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.
 

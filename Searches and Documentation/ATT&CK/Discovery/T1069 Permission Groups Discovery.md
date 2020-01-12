@@ -22,15 +22,6 @@ OR cmdline="*net1*" AND cmdline=*"group*"
 OR cmdline="*net1*" AND cmdline="*localgroup*"
 | table  _time process, cmdline, parent_process, user, host
 ```
-Input Source: Powershell  
-```
-index=powershell_logs
-(Message="*net*" AND Message="*group*")
-OR (Message="*net*" AND Message="*localgroup*")
-OR (Message="*Get-localgroup*")
-OR (Message="*Get-ADPrinicipalGroupMembership*")
-| table _time EventCode Message host
-```
 
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.

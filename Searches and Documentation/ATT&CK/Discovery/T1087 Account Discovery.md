@@ -27,22 +27,6 @@ OR (process_name="query.exe" AND cmdline="*user*")
 OR (process_name="dsquery.exe")  
 | table _time process_name, cmdline, parent_process, user, host
 ```
-Input Source: Powershell  
-```
-index=powershell_logs
-(Message="*get-localuser*")
-OR (Message="*net user*")
-OR (Message="*get-localgroupmembers*")
-OR (Message="*cmdkey.exe /list*" OR "*cmdkey.exe \list*")
-OR (Message="*get-aduser -filter*")
-OR (Message="get-localgroup*")
-OR (Message="*net localgroup*")
-OR (Message="*query user*")
-OR (Message="*ls c:/users/")
-OR (Message="*get-childitem C:/Users/")
-OR (Message="*dir C:/users")
-| table _time EventCode Message host
-```
 
 ## Suspicious Commands
 These commands will be picked up by the above Splunk search and are not commonly run by users.

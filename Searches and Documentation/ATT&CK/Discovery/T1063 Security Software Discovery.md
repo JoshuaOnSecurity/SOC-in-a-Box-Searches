@@ -25,16 +25,6 @@ OR (process_name="findstr.exe")
 OR (process_name="reg.exe" OR cmdline="*Microsoft-Windows-Sysmon/Operational*")
 | table _time process_name, cmdline, parent_process, user, host
 ```
-Input Source: PowerShell
-```
-index=powershell_logs
-(Message ="*netsh*" AND Message="*firewall*")
-OR (Message="*tasklist*" AND Message="*findstr*")
-OR (Message="*fltmc*")
-OR (Message="*findstr.exe*")
-OR (Message="*reg*" OR Message="*Microsoft-Windows-Sysmon/Operational*")
-| table _time EventCode Message host
-```
 
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.

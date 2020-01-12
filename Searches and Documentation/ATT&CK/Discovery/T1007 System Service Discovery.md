@@ -25,17 +25,6 @@ OR (process_name="net1.exe" AND cmdline="*start*")
 OR (process_name="wmic.exe" AND cmdline="*service  where*")
 | table _time process_name, cmdline, parent_process, user, host
 ```
-Input Source: Powershell  
-```
-index=powershell_logs
-(Message="*tasklist*")
-OR (Message="*sc query*")
-OR (Message="*sc start*")
-OR (Message="*sc stop*")
-OR (Message="*net start*")
-OR (Message="*wmic service where*")
-| table _time EventCode Message host
-```
 
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.

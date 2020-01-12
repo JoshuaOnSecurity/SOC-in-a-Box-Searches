@@ -20,14 +20,7 @@ OR  (process_name="w32tm.exe" AND cmdline="*/tz*")
 OR (process_name="net1.exe" AND cmdline="*time*")
 |table _time, process_name, cmdline, parent_process, user, host
 ```
-Input Source: Powershell  
-```
-index=powershell_logs
-(Message="*w32tm /tz*")
-OR (Message="*net time*")
-OR (Message="*Get-Date*")
-| table _time EventCode Message host
-```
+
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.
 

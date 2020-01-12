@@ -19,13 +19,6 @@ sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 process_name="nltest.exe" OR process_name="dsquery.exe"
 | table _time process_name, cmdline, parent_process, user, host
 ```
-Input Source: Powershell
-```
-index=powershell_logs
-(Message="*nltest*")
-OR (Message="*dsquery*")
-| table _time EventCode Message host
-```
 
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.

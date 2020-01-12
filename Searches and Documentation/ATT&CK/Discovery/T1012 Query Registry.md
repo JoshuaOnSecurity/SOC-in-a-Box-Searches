@@ -18,12 +18,7 @@ sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 cmdline="*reg*" AND cmdline="*query*"
 | table _time process_name, cmdline, parent_process, user, host
 ```
-Input Source: Powershell
-```
-index=powershell_logs
-Message="*reg*" AND Message="*query*"
-| table _time EventCode Message host
-```
+
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.
 
