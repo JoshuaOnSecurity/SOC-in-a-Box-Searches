@@ -1,0 +1,10 @@
+
+---
+allow_duplicates: true
+dependencies: []
+
+galaxy_info:
+  author: JoshuaOnSecurity
+  description: Automated Sysmon Deploymnent
+  company: "JoshuaOnSecurity"
+  license: "license (BSD, MIT)"
