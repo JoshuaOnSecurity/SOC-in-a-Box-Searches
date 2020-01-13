@@ -1,0 +1,3 @@
+- name: Deploy Sysmon
+  import_role:
+    name: ansible-sysmon
