@@ -17,15 +17,16 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon  
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(process_name="net.exe" AND cmdline="*user*") 
-OR (process_name="net1.exe" AND cmdline="*user*")
-OR (process_name="net.exe" AND cmdline="*group*")
-OR (process_name="net1.exe" AND cmdline="*group*") 
-OR (process_name="cmdkey.exe" AND cmdline="*list*") 
-OR (process_name="query.exe" AND cmdline="*user*") 
-OR (process_name="dsquery.exe")  
-| table _time process_name, cmdline, parent_process, user, host
+source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+(OriginalFileName="net.exe" AND CommandLine="*user*") 
+OR (OriginalFileName="net1.exe" AND CommandLine="*user*")
+OR (OriginalFileName="net.exe" AND CommandLine="*group*")
+OR (OriginalFileName="net1.exe" AND CommandLine="*group*") 
+OR (OriginalFileName="cmdkey.exe" AND CommandLine="*list*") 
+OR (OriginalFileName="query.exe" AND CommandLine="*user*") 
+OR (OriginalFileName="dsquery.exe")  
+| table _time Image, CommandLine, ParentImage, User, host
+
 ```
 
 ## Suspicious Commands

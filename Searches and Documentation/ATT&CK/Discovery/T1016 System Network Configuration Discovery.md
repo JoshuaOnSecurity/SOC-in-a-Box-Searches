@@ -18,14 +18,14 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon  
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(process_name="ipconfig.exe" AND cmdline="*ipconfig  /all*")
-OR (process_name="nbtstat.exe")
-OR (process_name="getmac.exe")
-OR (process_name="net.exe" AND cmdline="*config*")
-OR (process_name="netsh.exe" AND cmdline="*interface*")
-OR (process_name="route.exe" AND cmdline="*print*")
-| table _time process_name, cmdline, parent_process, user, host
+source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+(OriginalFileName="ipconfig.exe" AND CommandLine="*ipconfig  /all*")
+OR (OriginalFileName="netstat.exe")
+OR (OriginalFileName="getmac.exe")
+OR (OriginalFileName="net.exe" AND CommandLine="*config*")
+OR (OriginalFileName="netsh.exe" AND CommandLine="*interface*")
+OR (OriginalFileName="route.exe" AND CommandLine="*print*")
+| table _time Image, CommandLine, ParentImage, User, host
 ```
 
 ## Suspicious Commands

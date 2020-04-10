@@ -16,11 +16,12 @@ You may want to excluse or drill down the results from ping.exe, depending on yo
 
 Input Source:Sysmon
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(process_name="ping.exe") 
-OR (process_name="net.exe" OR process_name="net1.exe" cmdline="*net  view*")
-OR (process_name="arp.exe")
-| table _time process_name, cmdline, parent_process, user, host
+source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+(OriginalFileName="ping.exe") 
+OR (OriginalFileName="net.exe" OR OriginalFileName="net1.exe" CommandLine="*net  view*")
+OR (OriginalFileName="arp.exe")
+OR (OriginalFileName="nltestrk.exe" AND CommandLine="*dclist*")
+| table _time Image, CommandLine, ParentImage, User, host
 ```
 
 ## Suspicious Commands

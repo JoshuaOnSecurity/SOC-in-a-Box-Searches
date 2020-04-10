@@ -17,13 +17,13 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(process_name ="netsh.exe" AND cmdline="*firewall*")
-OR (process_name="tasklist.exe" AND cmdline="*findstr*")
-OR (process_name="fltmc.exe")
-OR (process_name="findstr.exe")
-OR (process_name="reg.exe" OR cmdline="*Microsoft-Windows-Sysmon/Operational*")
-| table _time process_name, cmdline, parent_process, user, host
+source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+(OriginalFileName ="netsh.exe" AND CommandLine="*firewall*")
+OR (OriginalFileName="tasklist.exe" AND CommandLine="*findstr*")
+OR (OriginalFileName="fltmc.exe")
+OR (OriginalFileName="findstr.exe")
+OR (OriginalFileName="reg.exe" OR CommandLine="*Microsoft-Windows-Sysmon/Operational*")
+| table _time Image, CommandLine, ParentImage, User, host
 ```
 
 ## Suspicious Commands

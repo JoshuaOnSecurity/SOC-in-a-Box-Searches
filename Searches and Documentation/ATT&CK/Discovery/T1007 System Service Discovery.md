@@ -16,14 +16,14 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon  
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(process_name="sc.exe" AND cmdline="*query*") 
-OR (process_name="sc.exe" AND cmdline="*start*") 
-OR (process_name="sc.exe" AND cmdline="*stop*") 
-OR (process_name="net.exe" AND cmdline="*start*")
-OR (process_name="net1.exe" AND cmdline="*start*")
-OR (process_name="wmic.exe" AND cmdline="*service  where*")
-| table _time process_name, cmdline, parent_process, user, host
+source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+(OriginalFileName="sc.exe" AND CommandLine="*query*") 
+OR (OriginalFileName="sc.exe" AND CommandLine="*start*") 
+OR (OriginalFileName="sc.exe" AND CommandLine="*stop*") 
+OR (OriginalFileName="net.exe" AND CommandLine="*start*")
+OR (OriginalFileName="net1.exe" AND CommandLine="*start*")
+OR (OriginalFileName="wmic.exe" AND CommandLine="*service  where*")
+| table _time Image, CommandLine, ParentImage, User, host
 ```
 
 ## Suspicious Commands
