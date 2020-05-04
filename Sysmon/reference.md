@@ -1,2 +1,2 @@
-Configuration file orginally create by SwiftOnSecurty  
+Configuration file orginally created by SwiftOnSecurty  
 Source: https://github.com/SwiftOnSecurity/sysmon-config
