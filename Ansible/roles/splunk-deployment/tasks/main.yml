@@ -1,0 +1,122 @@
+--- 
+#======================================== DOWNLOAD AND EXTRACT STAGE  ========================================#
+- name: Create Spunk download directory.
+  file:
+    path: '{{ splunk_download_directory }}'
+    state: directory 
+
+- name: Check if Splunk has already been downloaded.
+  stat:
+   path: '{{ splunk_download_directory }}/{{ splunk_file_name }}'
+  register: splunk_downloaded
+
+- name: Download Splunk if not already downloaded.
+  get_url:
+      url: '{{ download_url}}'
+      dest: '{{ splunk_download_directory }}'
+      checksum: '{{ splunk_md5 }}'
+  when: splunk_downloaded.stat.exists == False
+  
+- name: Download Splunk Sysmon addon.
+  get_url:
+      url: '{{ sysmon_addon_url }}'
+      dest: '{{ splunk_download_directory }}'
+      checksum: '{{ sysmon_addon_sha }}'
+
+- name: Download Splunk CIM addon.
+  get_url:
+      url: '{{ cim_addon_url }}'
+      dest: '{{ splunk_download_directory }}'
+      checksum: '{{ cim_addon_sha }}'
+
+- name: Check if Splunk is already installed.
+  stat:
+   path: '{{ ansible_env.HOME  }}/splunk/bin/splunk'
+  register: splunk_unziped
+
+- name: Unzip Splunk if not installed.
+  unarchive:
+    remote_src: yes
+    src: '{{ splunk_download_directory  }}/{{ splunk_file_name }}'
+    dest: '{{ ansible_env.HOME  }}'
+  when: not splunk_unziped.stat.exists
+
+#======================================== CONFIGURATION STAGE ========================================#
+
+- name: Create Admin user. 
+  template:
+    src: admin_credentials.j2
+    dest: '{{ ansible_env.HOME  }}/{{ admin_credential_path }}'
+
+- name: Enable the Splunk API.
+  template:
+    src: token_enable.j2
+    dest: '{{ ansible_env.HOME  }}/{{ splunk_token_path }}'
+
+- name: Start Splunk
+  shell: '{{ ansible_env.HOME }}/splunk/bin/splunk start --accept-license --no-prompt'
+
+#Sleep for one minute. Allows Splunk to start.
+- pause:
+    seconds: 60
+
+- name: Curl request for Splunk API key. Output key to file.
+  shell: 'curl -k -u  {{ splunk_web_username }}:{{ splunk_web_password }} -X POST https://{{ inventory_hostname }}:8089/services/authorization/tokens? output_mode=json --data name=admin  --data audience=AnsibleToken --data-urlencode expires_on=+30m >> APIresult.txt' 
+
+- name: Regex Token file to get API key.
+  shell: 'cat {{ ansible_env.HOME }}/APIresult.txt | grep -Poe "(?<=token\":\")(.*?)[^\"]+"'
+  register: APIkey
+
+- name: Install the CIM Splunk Add-on.
+  shell: '{{ ansible_env.HOME }}/splunk/bin/splunk install app {{ splunk_download_directory }}/{{ cim_addon_filename }} -token {{ APIkey.stdout }}'
+
+#Pause to allow install to compleate.
+- pause:
+    seconds: 10
+
+- name: Install the Sysmon Splunk Add-on.
+  shell: '{{ ansible_env.HOME }}/splunk/bin/splunk install app {{ splunk_download_directory }}/{{ sysmon_addon_filename }} -token {{ APIkey.stdout }}'
+
+#Pause to allow install to compleate.
+- pause:
+    seconds: 10
+
+- name: Create Sysmon index.
+  shell: '{{ ansible_env.HOME }}/splunk/bin/splunk add index Sysmon -maxTotalDataSizeMB 1000 -token {{ APIkey.stdout }}'
+
+#Pause to allow creation to compleate.
+- pause:
+    seconds: 10
+
+- name: Enable Listener.
+  shell: '{{ ansible_env.HOME }}/splunk/bin/splunk enable listen {{ splunk_listen_port }} -token {{ APIkey.stdout }}'
+
+#Pause to allow creation to compleate.
+- pause:
+    seconds: 10
+
+- name: Add MITRE searches to Splunk. 
+  template:
+    src: saved_searches.j2
+    dest: '{{ ansible_env.HOME  }}/splunk/etc/apps/search/local/savedsearches.conf'
+
+#======================================== CLEANUP STAGE ========================================#
+
+- name: Remove API key file.
+  shell: 'rm {{ ansible_env.HOME }}/APIresult.txt'
+
+- name: Disable Splunk API. 
+  shell: 'rm {{ ansible_env.HOME  }}/{{ splunk_token_path }}'
+
+- name: Remove downloaded files. 
+  shell: 'rm -r {{ splunk_download_directory }}'
+
+- name: Restart Splunk
+  shell:  '{{ ansible_env.HOME }}/splunk/bin/splunk restart'
+  register: sysmon_restart_result
+
+#Output Splunk restart result & compleate message. 
+- debug: var=sysmon_restart_result.stdout_lines
+- debug: 
+    msg: 'Splunk install compleate. Access Web Interface at http://{{ inventory_hostname }}:8000'
+

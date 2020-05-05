@@ -1,0 +1,19 @@
+[win]
+##INSERT-WIN-IP
+
+[win:vars]
+##INSERT SERVICE ACCOUNT USER
+ansible_user=
+##INSERT SERVICE ACCOUNT PASS
+ansible_password=
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
+
+[siem]
+##INSERT SIEM IP
+
+[siem:vars]
+##INSERT SSH USER
+ansible_user=spltest
+##INSERT SSH PASS
+ansible_password=password

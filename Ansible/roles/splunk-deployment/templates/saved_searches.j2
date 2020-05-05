@@ -1,0 +1,15 @@
+[test]
+alert.severity = 5
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = test
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="WinEventLog:Microsoft-Windows-Sysmon/Operational"\
+OriginalFileName="mshta.exe" OR CommandLine="*.hta*"\
+| table _time Image, CommandLine, ParentImage, User, host

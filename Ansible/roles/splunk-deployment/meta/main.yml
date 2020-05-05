@@ -1,0 +1,9 @@
+---
+allow_duplicates: true
+dependencies: []
+
+galaxy_info:
+  author: JoshuaOnSecurity
+  description: Automated Splunk Deploymnent
+  company: "JoshuaOnSecurity"
+  license: "license (BSD, MIT)"

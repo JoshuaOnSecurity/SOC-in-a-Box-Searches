@@ -1,0 +1,10 @@
+#Template for inputs.conf file. 
+[default]
+host = {{ ansible_hostname }}
+
+# Windows Sysmon Logs
+[WinEventLog://Microsoft-Windows-Sysmon/Operational]
+disabled = false
+renderXml = true
+source = XmlWinEventLog:Microsoft-Windows-Sysmon/Operational
+index = sysmon

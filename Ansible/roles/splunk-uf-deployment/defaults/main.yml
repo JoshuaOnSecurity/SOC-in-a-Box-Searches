@@ -1,0 +1,11 @@
+#-----------------------------------GLOBAL-VARIABLES-DO-NOT-CHANGE-----------------------------------#
+
+#----------------------Download Variables----------------------#
+splunk_uf_download: "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=windows&version=8.0.3&product=universalforwarder&filename=splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi&wget=true"
+splunk_download_location: "C://Splunk"
+splunk_uf_checksum: "eb6e471e13d3d7fa599a729ad71b0523"
+splunk_uf_filename: "splunkforwarder-8.0.3-a6754d8441bf-x64-release.msi"
+
+#----------------------Splunk Variables----------------------#
+splunk_uf_install_directory: "c://Program Files/SplunkUniversalForwarder"
+

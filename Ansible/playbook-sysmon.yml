@@ -1,0 +1,4 @@
+- hosts: win
+  tasks:
+    - import_role:
+       name: sysmon-deployment

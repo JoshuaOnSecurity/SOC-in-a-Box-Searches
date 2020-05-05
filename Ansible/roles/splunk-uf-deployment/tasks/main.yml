@@ -1,0 +1,50 @@
+---
+#======================================== DOWNLOAD AND INSTALL STAGE  ========================================#
+- name: Create Download Directory
+  win_file:
+    path: "{{ splunk_download_location }}"
+    state: directory
+
+- name: Download Splunk UF.
+  win_get_url:
+    url: "{{ splunk_uf_download }}"
+    dest: "{{ splunk_download_location }}/{{ splunk_uf_filename }}"
+
+- name: Install Splunk UF.
+  win_command: "cmd.exe /k cd {{ splunk_download_location }} && msiexec.exe /i {{ splunk_uf_filename }} AGREETOLICENSE=Yes RECEIVING_INDEXER=\"{{ splunk_ip }}:{{ splunk_indexer_port }}\" DEPLOYMENT_SERVER=\"{{ splunk_ip }}:{{ splunk_deploy_port }}\" SPLUNKUSERNAME={{ splunk_uf_username }} SPLUNKPASSWORD={{ splunk_uf_password }} /quiet"
+  vars:
+    become: yes
+    ansible_become_method: runas
+    ansible_become_user: Administrator
+    ansible_become_password: "{{ ansible_password }}"
+
+#Pause allowing the UF to startup. 
+- pause:
+    minutes: 1
+
+#======================================== CONFIGURATION STAGE ========================================#
+
+- name: Configure inputs.conf.
+  win_template:
+    src: "inputs.conf.j2"
+    dest: "{{ splunk_uf_install_directory }}/etc/system/local/inputs.conf"
+  vars:
+    become: yes
+    ansible_become_method: runas
+    ansible_become_user: Administrator
+    ansible_become_password: "{{ ansible_password }}"
+
+#======================================== CLEANUP STAGE ========================================#
+
+- name: Restart UF.
+  win_command: "cmd.exe /k cd {{ splunk_uf_install_directory }}/bin && .\\splunk restart"
+  vars:
+    become: yes
+    ansible_become_method: runas
+    ansible_become_user: Administrator
+    ansible_become_password: "{{ ansible_password }}"
+
+- name: Remove Splunk download directory.
+  win_file:
+    path: "{{ splunk_download_location }}"
+    state: absent

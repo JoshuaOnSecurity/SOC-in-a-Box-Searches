@@ -1,0 +1,13 @@
+- hosts: siem
+  vars_prompt:
+
+    - name: splunk_web_username
+      prompt: "What would you like your Splunk Admin username to be?"
+      private: no
+
+    - name: splunk_web_password
+      prompt: "What  would you like your Splunk Admin password to be?"
+      
+  tasks:
+    - import_role:
+       name: splunk-deployment

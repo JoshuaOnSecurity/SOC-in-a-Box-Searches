@@ -1,0 +1,10 @@
+#-----------------------------------GLOBAL-VARIABLES-DO-NOT-CHANGE-----------------------------------#
+
+#----------------------Sysmon Download Variables----------------------#
+sysmon_download_url_base: "https://download.sysinternals.com/files"
+sysmon_download_file: Sysmon
+file_ext: .zip
+
+#----------------------Sysmon Configuration Variables----------------------#
+sysmon_install_location: "c:\\sysmon"
+sysmon_config_url: "https://raw.githubusercontent.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/master/Sysmon/SysmonConfig.xml"

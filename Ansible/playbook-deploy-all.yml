@@ -1,0 +1,42 @@
+# Deploy SIEM solution
+- hosts: siem
+  vars_prompt:
+
+    - name: splunk_web_username
+      prompt: "What would you like your Splunk Admin username to be?"
+      private: no
+
+    - name: splunk_web_password
+      prompt: "What  would you like your Splunk Admin password to be?"
+      
+  tasks:
+    - import_role:
+       name: splunk-deployment
+
+# Deploy UF and Sysmon
+- hosts: win
+  vars_prompt:
+ 
+    - name: splunk_uf_username
+      prompt: "What would you like your Splunk UF admin username to be?"
+      private: no
+
+    - name: splunk_uf_password
+      prompt: "What  would you like your Splunk UF admin password to be?"
+
+    - name: splunk_ip
+      prompt: "What is the IP/Domain of your Splunk instance?"
+      private: no
+
+    - name: splunk_deploy_port
+      prompt: "What is the port of your deployment server (Default is 8089)?"
+      private: no
+
+    - name: splunk_indexer_port
+      prompt: "What is the port of your indexing server (Default is 9997)?"
+      private: no
+
+  tasks:
+    - import_role:
+       name: sysmon-deployment
+       name: splunk-uf-deployment

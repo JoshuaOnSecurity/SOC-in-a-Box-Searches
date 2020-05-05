@@ -11,7 +11,7 @@ OR registry_key_path="HKLM\\System\\CurrentControlSet\\Services\\Sysmon64\\*")
 Input Source: Sysmon
 Discovers if a sysmon state changes. Could indicate malicous activity. 
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-event_id=4 service_state!=Started 
-| table _time, host, Image, ProcessGuid, TargetObject, EventType
+source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+OriginalFileName="fltmc.exe" AND CommandLine="*unload*"
+| table _time OriginalFileName, CommandLine, user, host
 ```

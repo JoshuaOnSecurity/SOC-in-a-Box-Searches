@@ -1,1 +1,3 @@
-# SOC-in-a-Box-Searches
+# FYP Project
+
+## Steps to reproduce

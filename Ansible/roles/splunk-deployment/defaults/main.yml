@@ -1,0 +1,36 @@
+#-----------------------------------GLOBAL-VARIABLES-DO-NOT-CHANGE-----------------------------------#
+
+#----------------------Splunk Variables----------------------#
+
+#Diretory where Splunk files will be downloaded to.
+splunk_download_directory: "/tmp/splunk"
+#Splunk download URL.
+download_url: "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.0.3&product=splunk&filename=splunk-8.0.3-a6754d8441bf-Linux-x86_64.tgz&wget=true" 
+#Splunk ZIP file checksum.
+splunk_md5: "md5:bb3255a62fe5337e20482e8ad77848b8"
+#Splunk ZIP file name.
+splunk_file_name: "splunk-8.0.3-a6754d8441bf-Linux-x86_64.tgz"
+#File where admin credentials are stored.
+admin_credential_path: "splunk/etc/system/local/user-seed.conf"
+#Configuration file for where Splunk API is enabled. 
+splunk_token_path: "splunk/etc/system/local/authorize.conf"
+#Splunk listening port to receive data.
+splunk_listen_port: "9997"
+
+#----------------------Sysmon Addon----------------------#
+
+#Splunk Sysmon addon download URL.
+sysmon_addon_url: "https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/raw/master/Splunk%20Configuration/Required%20Add-ons/splunk-add-on-for-microsoft-sysmon_1062.tgz" 
+#Splunk Sysmon addon checksum.
+sysmon_addon_sha: "sha256:dce7cbc6a4fb4476e57229a5e404cef6542c526345038b126a759b89d63bd164"
+#Splunk Sysmon addon download file name.
+sysmon_addon_filename: "splunk-add-on-for-microsoft-sysmon_1062.tgz"
+
+#----------------------CIM Addon----------------------#
+
+#Splunk CIM addon download URL.
+cim_addon_url: "https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/raw/master/Splunk%20Configuration/Required%20Add-ons/splunk-common-information-model-cim_4150.tgz" 
+#Splunk CIM addon checksum.
+cim_addon_sha: "sha256:f68d4d50e2c2ed43d3335fb09eac1c33c447ec1dac2c208d8f9858ca452155e1"
+#Splunk CIM addon download file name.
+cim_addon_filename: "splunk-common-information-model-cim_4150.tgz"
