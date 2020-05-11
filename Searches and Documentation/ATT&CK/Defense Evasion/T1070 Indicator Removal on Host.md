@@ -20,13 +20,6 @@ OR (process_name="*fsutil*")
 | table _time Image, CommandLine, process_name, User, host
 ```
 
-Input Source: Windows Event Logs
-```
-sourcetype="WinEventLog"
-(EventCode=1102)
-|table _time, TaskCategory, LogName,  user, Security_ID, Account_Name, Logon_ID, ComputerName
-```
-
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.
 

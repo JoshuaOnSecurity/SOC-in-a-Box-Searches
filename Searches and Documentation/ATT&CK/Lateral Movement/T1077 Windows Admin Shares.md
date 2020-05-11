@@ -19,21 +19,12 @@ source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 OR (process_name="net1.exe" AND cmdline="*$*")
 | table _time Image, CommandLine, process_name, User, host
 ```
-Input Source: Powershell
-```
-index=powershell_logs
-(Message="*net*" AND Message="*$*")
-OR (Message="*New-PSDrive*" AND Message="*root*")
-| table _time EventCode Message host
-```
-
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.
 
 | Process  | Command | Description
 | ------------- | ------------- | -------- | 
 |net.exe | net use/session/file.../C$/IPC$/Admin$...|User attempting to access hidden network share. |
-|Powershell.exe |New-PSDrive...filesystem -root... |User attempting to access hidden network share.  |
 
 ## How to react
 Depending on your network, it is perfectly acceptable for a system administrator to access admin shares. However, it is essential to verify that the user did access that share personally, and not for a malicious intent. I.e. did they use their workstation? If not, standard incident response procedures should be followed. Another consideration is that passwords may be in plain text. 
