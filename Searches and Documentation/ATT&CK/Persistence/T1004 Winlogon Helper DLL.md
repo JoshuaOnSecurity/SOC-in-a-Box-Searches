@@ -1,5 +1,5 @@
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 TargetObject="*\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\*"
 OR TargetObject="*\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell\\*"
 OR TargetObject="*\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Notify\\*"

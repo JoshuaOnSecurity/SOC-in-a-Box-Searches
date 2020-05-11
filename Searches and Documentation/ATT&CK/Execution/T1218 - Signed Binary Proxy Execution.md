@@ -1,9 +1,9 @@
 # Requires review
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-OriginalFileName="Msiexec.exe" 
-OR OriginalFileName="Mavinject.exe" 
-OR OriginalFileName="SyncAppvPublishingServer.exe" 
-OR OriginalFileName="Odbcconf.exe"
-| table _time Image, CommandLine, ParentImage, User, host
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="Msiexec.exe" 
+OR process_name="Mavinject.exe" 
+OR process_name="SyncAppvPublishingServer.exe" 
+OR process_name="Odbcconf.exe"
+| table _time Image, CommandLine, process_name, User, host
 ```

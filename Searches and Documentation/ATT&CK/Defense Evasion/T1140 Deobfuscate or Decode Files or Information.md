@@ -13,9 +13,10 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(OriginalFileName="certutil.exe" and CommandLine="*decode*") 
-| table _time OriginalFileName, CommandLine, parent_process, user, host
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="certutil.exe" AND CommandLine="*-encode*" 
+OR (process_name="certutil.exe" AND CommandLine="*-decode*") 
+| table _time process_name, CommandLine, user, host
 ```
 
 ## Suspicious Commands

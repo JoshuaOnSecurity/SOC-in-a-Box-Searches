@@ -14,9 +14,9 @@ Splunk searches will need to be refined for your environment. Run this search ov
 Input Source: Sysmon  
 This alert will show all useage of BITS. Depending on the enviroment and how often BITS is used, this alert may need to be edited. 
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-OriginalFileName="bitsadmin.exe"
-| table _time Image, CommandLine, ParentImage, User, host
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="bitsadmin.exe"
+| table _time Image, CommandLine, process_name, User, host
 ```
 
 ## Suspicious Commands

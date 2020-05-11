@@ -14,9 +14,9 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 CommandLine="*reg*" AND CommandLine="*query*"
-| table _time Image, CommandLine, ParentImage, User, host
+| table _time Image, CommandLine, Parent_process, User, host
 ```
 
 ## Suspicious Commands

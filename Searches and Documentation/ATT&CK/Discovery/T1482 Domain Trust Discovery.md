@@ -15,9 +15,9 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-OriginalFileName="nltestrk.exe" OR OriginalFileName="dsquery.exe"
-| table _time Image, CommandLine, ParentImage, User, host
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="nltest.exe" OR process_name="dsquery.exe"
+| table _time Image, CommandLine, process_name, User, host
 ```
 
 ## Suspicious Commands

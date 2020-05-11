@@ -14,13 +14,13 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-OriginalFileName="net.exe" OR OriginalFileName="net1.exe"
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="net.exe" OR process_name="net1.exe"
 CommandLine="*net*" AND CommandLine="*localgroup*"
 OR (CommandLine="*net*" AND CommandLine="*group*")
 OR (CommandLine="*net1*" AND CommandLine=*"group*")
 OR (CommandLine="*net1*" AND CommandLine="*localgroup*")
-| table _time Image, CommandLine, ParentImage, User, host
+| table _time Image, CommandLine, process_name, User, host
 ```
 
 ## Suspicious Commands

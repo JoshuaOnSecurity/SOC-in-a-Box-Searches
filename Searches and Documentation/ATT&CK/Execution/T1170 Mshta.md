@@ -14,9 +14,9 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-OriginalFileName="mshta.exe"  OR CommandLine="*.hta*"
-| table _time Image, CommandLine, ParentImage, User, host
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="mshta.exe" OR CommandLine="*.hta*"
+| table _time Image, CommandLine, process_name, User, host
 ```
 Input Source: Powershell
 ```

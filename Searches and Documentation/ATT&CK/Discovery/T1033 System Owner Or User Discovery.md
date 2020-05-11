@@ -21,14 +21,14 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon  
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-(OriginalFileName="whoami.exe")
-OR (OriginalFileName="hostname.exe")
-OR (OriginalFileName="query.exe" AND CommandLine="*session*")
-OR (OriginalFileName="quser.exe")
-OR (OriginalFileName="qwinsta.exe")
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+(process_name="whoami.exe")
+OR (process_name="hostname.exe")
+OR (process_name="query.exe" AND CommandLine="*session*")
+OR (process_name="quser.exe")
+OR (process_name="qwinsta.exe")
 OR (wmic.exe AND CommandLine="*useraccount*")
-| table _time Image, CommandLine, ParentImage, User, host
+| table _time Image, CommandLine, process_name, User, host
 ```
 
 ## Suspicious Commands

@@ -14,10 +14,10 @@ Splunk searches will need to be refined for your environment. Run this search ov
 
 Input Source: Sysmon
 ```
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
-(process_name="net.exe AND cmdline="*$*")
-OR (process_name="net1.exe AND cmdline="*$*")
-| table _time process_name, cmdline, parent_process, user, host
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+(process_name="net.exe" AND cmdline="*$*")
+OR (process_name="net1.exe" AND cmdline="*$*")
+| table _time Image, CommandLine, process_name, User, host
 ```
 Input Source: Powershell
 ```

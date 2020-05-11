@@ -16,11 +16,11 @@ Splunk searches will need to be refined for your environment. Run this search ov
 Search discovers commands run utilising the above processes.   
 Input Source: Sysmon
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-OriginalFileName="qprocess.exe" 
-OR (OriginalFileName="tasklist.exe")
-OR (OriginalFileName="query.exe" CommandLine="query*" AND CommandLine="*process*")
-| table _time Image, CommandLine, ParentImage, User, host
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="qprocess.exe" 
+OR (process_name="tasklist.exe")
+OR (process_name="query.exe" CommandLine="query*" AND CommandLine="*process*")
+| table _time Image, CommandLine, process_name, User, host
 ```
 
 ## Suspicious Commands

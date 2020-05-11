@@ -1,6 +1,5 @@
 ```
-source="WinEventLog:Microsoft-Windows-Sysmon/Operational"
-OriginalFileName="mavinject.exe" OR CommandLine="*/INJECTRUNNING*"
-| table _time Image, CommandLine, ParentImage, User, host
-
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+process_name="mavinject.exe" OR CommandLine="*/INJECTRUNNING*"
+| table _time Image, CommandLine, process_name, User, host
 ```
