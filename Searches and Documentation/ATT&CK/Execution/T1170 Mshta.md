@@ -18,10 +18,6 @@ source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
 process_name="mshta.exe" OR CommandLine="*.hta*"
 | table _time Image, CommandLine, process_name, User, host
 ```
-Input Source: Powershell
-```
-Powershell
-```
 
 ## Suspicious Commands
 These commands are not commonly run by users and may be an indication of compromise.
