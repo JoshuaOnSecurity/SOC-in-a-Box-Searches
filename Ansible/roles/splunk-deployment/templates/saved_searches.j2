@@ -1,15 +1,1032 @@
-[test]
-alert.severity = 5
+## Splunk searches created for the artefact
+[T1201 Password Policy Discovery]
+alert.severity = 4
 alert.suppress = 0
 alert.track = 1
 counttype = number of events
 cron_schedule = 0 * * * *
-description = test
+description = T1201 Password Policy Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1201%20Password%20Policy%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="net.exe" AND CommandLine="*accounts*")\
+OR (process_name="net1.exe" AND CommandLine="*accounts*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1004 Winlogon Helper DLL]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1004 Winlogon Helper DLL\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Persistence/T1004%20Winlogon%20Helper%20DLL.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+TargetObject="*\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\*"\
+OR TargetObject="*\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell\\*"\
+OR TargetObject="*\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Notify\\*"\
+| table _time Image, TargetObject, host
+
+[T1007 System Service Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1007 System Service Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1007%20System%20Service%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="sc.exe" AND CommandLine="*query*") \
+OR (process_name="sc.exe" AND CommandLine="*start*") \
+OR (process_name="sc.exe" AND CommandLine="*stop*") \
+OR (process_name="net.exe" AND CommandLine="*start*")\
+OR (process_name="net1.exe" AND CommandLine="*start*")\
+OR (process_name="wmic.exe" AND CommandLine="*service  where*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1012 Query Registry]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1012 Query Registry\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1012%20Query%20Registry.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+CommandLine="*reg*" AND CommandLine="*query*"\
+| table _time Image, CommandLine, Parent_process, User, host
+
+[T1016 System Network Configuration Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1016 System Network Configuration Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1016%20System%20Network%20Configuration%20Discovery.md
 dispatch.earliest_time = -1h
 dispatch.latest_time = now
 enableSched = 1
 quantity = 0
 relation = greater than
 search = source="WinEventLog:Microsoft-Windows-Sysmon/Operational"\
-OriginalFileName="mshta.exe" OR CommandLine="*.hta*"\
+(OriginalFileName="ipconfig.exe" AND CommandLine="*ipconfig  /all*")\
+OR (OriginalFileName="netstat.exe")\
+OR (OriginalFileName="getmac.exe")\
+OR (OriginalFileName="net.exe" AND CommandLine="*config*")\
+OR (OriginalFileName="netsh.exe" AND CommandLine="*interface*")\
+OR (OriginalFileName="route.exe" AND CommandLine="*print*")\
 | table _time Image, CommandLine, ParentImage, User, host
+
+[T1018 Remote System Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1018 Remote System Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1018%20Remote%20System%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="ping.exe") \
+OR (process_name="net.exe" OR process_name="net1.exe" \
+CommandLine="*net  view*")\
+OR (process_name="arp.exe")\
+OR (process_name="nltestrk.exe" AND CommandLine="*dclist*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1031 Modify Existing Service]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1031 Modify Existing Service\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Persistence/T1031%20Modify%20Existing%20Service.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="sc.exe" OR process_name="powershell.exe" OR process_name="cmd.exe") \
+AND (CommandLine="*sc*config*binpath*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1033 System Owner Or User Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1033 System Owner Or User Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1033%20System%20Owner%20Or%20User%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="whoami.exe")\
+OR (process_name="hostname.exe")\
+OR (process_name="query.exe" AND CommandLine="*session*")\
+OR (process_name="quser.exe")\
+OR (process_name="qwinsta.exe")\
+OR (wmic.exe AND CommandLine="*useraccount*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1047 Windows Management Instrumentation]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1047 Windows Management Instrumentation\
+\
+Splunk searches will need to be refined for your environment. Run this search over a long period of time and blacklist any noisy events from business-critical applications. Some fields may not match your environment. Specific commands may have been blacklisted or left out due to use in other searches within this repo, keeping alerting down to a minimum.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1047%20Windows%20Management%20Instrumentation.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="wmic.exe" AND cmdline="*format*"\
+| table _time process_name, cmdline, parent_process, user, host
+
+[T1035 Service Execution]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1035 Service Execution\
+\
+Adversaries may execute a binary, command, or script via a method that interacts with Windows services, such as the Service Control Manager. This can be done by either creating a new service or modifying an existing service. This technique is the execution used in conjunction with New Service and Modify Existing Service during service persistence or privilege escalation.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1035%20Service%20Execution.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" \
+process_name="sc.exe" \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1049 System Network Connections Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1049 System Network Connections Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1049%20System%20Network%20Connections%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="netstat.exe") \
+OR (process_name="net.exe" AND CommandLine="*use*")\
+OR (process_name="net.exe" AND CommandLine="*sessions*")\
+OR (process_name="net.exe" AND CommandLine="*file*")\
+OR (process_name="net1.exe" AND CommandLine="*use*")\
+OR (process_name="net1.exe" AND CommandLine="*sessions*")\
+OR (process_name="net1.exe" AND CommandLine="*file*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1053 Scheduled Task]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1053 Scheduled Task\
+\
+Utilities such as at and schtasks, along with the Windows Task Scheduler, can be used to schedule programs or scripts to be executed at a date and time. A task can also be scheduled on a remote system, provided the proper authentication is met to use RPC and file and printer sharing is turned on. Scheduling a task on a remote system typically required being a member of the Administrators group on the remote system.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1053%20Scheduled%20Task.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="At.exe" OR process_name="schtasks.exe" \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1055 Process Injection]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1055 Process Injection\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Privilege%20Escalation/T1055%20Process%20Injection.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="mavinject.exe" OR CommandLine="*/INJECTRUNNING*"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1063 Security Software Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1063 Security Software Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1063%20Security%20Software%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name ="netsh.exe" AND CommandLine="*firewall*")\
+OR (process_name="tasklist.exe" AND CommandLine="*findstr*")\
+OR (process_name="fltmc.exe")\
+OR (process_name="findstr.exe")\
+OR (process_name="reg.exe" OR CommandLine="*Microsoft-Windows-Sysmon/Operational*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1218 - Signed Binary Proxy Execution]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1218 - Signed Binary Proxy Execution\
+\
+Binaries signed with trusted digital certificates can execute on Windows systems protected by digital signature validation. Several Microsoft signed binaries that are default on Windows installations can be used to proxy execution of other files. This behavior may be abused by adversaries.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1218%20-%20Signed%20Binary%20Proxy%20Execution.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="Msiexec.exe" \
+OR process_name="Mavinject.exe" \
+OR process_name="SyncAppvPublishingServer.exe" \
+OR process_name="Odbcconf.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1158 Hidden Files and Directories]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1158 Hidden Files and Directories\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Persistence/T1158%20Hidden%20Files%20and%20Directories.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="attrib.exe" \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1145 Private Keys]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1145 Private Keys\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Credential%20Access/T1145%20Private%20Keys.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" \
+(process_name="dir.exe" OR process_name="findstr.exe" AND CommandLine=".key") \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1140 Deobfuscate or Decode Files or Information]
+alert.severity = 5
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1140 Deobfuscate or Decode Files or Information\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Defense%20Evasion/T1140%20Deobfuscate%20or%20Decode%20Files%20or%20Information.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="certutil.exe" AND CommandLine="*-encode*" \
+OR (process_name="certutil.exe" AND CommandLine="*-decode*") \
+| table _time process_name, CommandLine, user, host
+
+[T1138 Application Shimming]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1138 Application Shimming\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Persistence/T1138%20Application%20Shimming.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="sdbinst.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1077 Windows Admin Shares]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1077 Windows Admin Shares\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Lateral%20Movement/T1077%20Windows%20Admin%20Shares.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="net.exe" AND cmdline="*$*")\
+OR (process_name="net1.exe" AND cmdline="*$*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1135 Network Share Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1135 Network Share Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1135%20Network%20Share%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="net.exe" AND CommandLine="*view*")\
+OR (process_name="net.exe" AND CommandLine="*share*")\
+OR (process_name="net1.exe" AND CommandLine="*view*")\
+OR (process_name="net1.exe" AND CommandLine="*share*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1075 Pass the Hash]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1075 Pass the Hash\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Lateral%20Movement/T1075%20Pass%20the%20Hash.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" (CommandLine="sekurlsa") | table _time Image, CommandLine, process_name, User, host
+
+[T1126 Network Share Connection Removal]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1126 Network Share Connection Removal\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Defense%20Evasion/T1126%20Network%20Share%20Connection%20Removal.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="net.exe" AND CommandLine="*share*" AND CommandLine="*del*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1069 Permission Groups Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1069 Permission Groups Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1069%20Permission%20Groups%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="net.exe" OR process_name="net1.exe"\
+CommandLine="*net*" AND CommandLine="*localgroup*"\
+OR (CommandLine="*net*" AND CommandLine="*group*")\
+OR (CommandLine="*net1*" AND CommandLine=*"group*")\
+OR (CommandLine="*net1*" AND CommandLine="*localgroup*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1124 System Time Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1124 System Time Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1124%20System%20Time%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="net.exe" AND CommandLine="*time*") \
+OR  (process_name="w32time.dll" AND CommandLine="*tz*") \
+OR (process_name="net1.exe" AND CommandLine="*time*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1057 Process Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1057 Process Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1057%20Process%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="qprocess.exe" \
+OR (process_name="tasklist.exe")\
+OR (process_name="query.exe" CommandLine="query*" AND CommandLine="*process*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1482 Domain Trust Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1482 Domain Trust Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1482%20Domain%20Trust%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="nltest.exe" OR process_name="dsquery.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1076 Remote Desktop Protocol]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1076 Remote Desktop Protocol\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Lateral%20Movement/T1076%20Remote%20Desktop%20Protocol.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" (CommandLine="tsconrdp*") | table _time Image, CommandLine, process_name, User, host
+
+[T1223 Compiled HTML File]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1223 Compiled HTML File\
+\
+Compiled HTML files (.chm) are commonly distributed as part of the Microsoft HTML Help system. CHM files are compressed compilations of various content such as HTML documents, images, and scripting/web related programming languages such VBA, JScript, Java, and ActiveX.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/Compiled%20HTML%20File.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="hh.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1070 Indicator Removal on Host]
+alert.severity = 5
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1070 Indicator Removal on Host\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Defense%20Evasion/T1070%20Indicator%20Removal%20on%20Host.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="*wevtutil*")\
+OR (process_name="*fsutil*")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1216 - Signed Script Proxy Execution]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1216 - Signed Script Proxy Execution\
+\
+Scripts signed with trusted certificates can be used to proxy execution of malicious files. This behaviour may bypass signature validation restrictions and application whitelisting solutions that do not account for use of these scripts.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1216%20-%20Signed%20Script%20Proxy%20Execution.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="cscript.exe" OR CommandLine="*pubprn.vbs*"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1082 System Information Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1082 System Information Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1082%20System%20Information%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="sysinfo.exe") \
+OR (process_name="reg.exe" AND CommandLine="*HKLM\\SYSTEM\\CurrentControlSet\\Services\\Disk\\Enum*") \
+OR (process_name="reg.exe" AND CommandLine="*Microsoft\\Cryptography*") \
+OR (process_name="hostname.exe")\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1081 Credentials in Files]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1081 Credentials in Files\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Credential%20Access/T1081%20Credentials%20in%20Files.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" \
+(process_name="findstr.exe" AND CommandLine="pass")\
+OR CommandLine="unattend.xml"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1214 Credentials in Registry]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1214 Credentials in Registry\
+\
+Link to documentation:  https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Credential%20Access/T1214%20Credentials%20in%20Registry.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" \
+(process_name="reg.exe" AND CommandLine="querypass*") \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1083 File and Directory Discovery]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1083 File and Directory Discovery\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1083%20File%20and%20Directory%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="tree.com"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1088 Bypass User Account Control]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1088 Bypass User Account Control\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Privilege%20Escalation/T1088%20Bypass%20User%20Account%20Control.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+TargetObject="*\\ms-settings\\shell\\open\\command\\*"\
+OR TargetObject="*\\mscfile\\shell\\open\\command\\*"\
+OR TargetObject="*Microsoft\\Windows\\CurrentVersion\\App Paths\\control.exe*"\
+OR TargetObject="*shell\\runas\\command\\isolatedCommand*"\
+| table _time Image, TargetObject, host
+
+[T1085  Rundll32]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 6 * * 1
+description = T1085  Rundll32\
+\
+The rundll32.exe program can be called to execute an arbitrary binary. Adversaries may take advantage of this functionality to proxy execution of code to avoid triggering security tools that may not monitor execution of the rundll32.exe process because of whitelists or false positives from Windows using rundll32.exe for normal operations.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1085%20%20Rundll32.md
+dispatch.earliest_time = -1w
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="rundll32.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1209 Time Providers]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1209 Time Providers\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Persistence/T1209%20Time%20Providers.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+TargetObject="*\\System\\CurrentControlSet\\Services\\W32Time\\TimeProviders\\*"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1117  Regsvr32]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1117  Regsvr32\
+\
+Regsvr32.exe is a command-line program used to register and unregister object linking and embedding controls, including dynamic link libraries (DLLs), on Windows systems. Regsvr32.exe can be used to execute arbitrary binaries.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1117%20%20Regsvr32.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="regsvr32.exe" OR CommandLine="*regsvr32.exe*"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1087 Account Discovery]
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 45 * * * *
+description = T1087 Account Discovery \
+\
+Adversaries may attempt to get a listing of local system or domain accounts.\
+\
+\
+Documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Discovery/T1087%20Account%20Discovery.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="net.exe" AND cmdline="*user*") \
+OR (process_name="net1.exe" AND cmdline="*user*")\
+OR (process_name="net.exe" AND cmdline="*group*")\
+OR (process_name="net1.exe" AND cmdline="*group*") \
+OR (process_name="cmdkey.exe" AND cmdline="*list*") \
+OR (process_name="query.exe" AND cmdline="*user*") \
+OR (process_name="dsquery.exe")\
+| table _time process_name, cmdline, parent_process, user, host
+
+[T1202 Indirect Command Execution]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1202 Indirect Command Execution\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Defense%20Evasion/T1202%20Indirect%20Command%20Execution.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+(process_name="pcalua.exe")\
+OR (process_name="bash.exe")\
+OR (process_name="forfiles.exe")\
+| table _time process_name, cmdline, parent_process, user, host
+
+[T1089 Disabling Security Tools]
+alert.severity = 5
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1089 Disabling Security Tools\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Defense%20Evasion/T1089%20Disabling%20Security%20Tools.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="fltmc.exe" AND CommandLine="*unload*"\
+| table _time process_name, CommandLine, user, host
+
+[T1197 BITS Jobs]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1197 BITS Jobs\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Persistence/T1197%20BITS%20Jobs.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="bitsadmin.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1115 Clipboard Data]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1115 Clipboard Data\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Collection/T1115%20Clipboard%20Data.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" \
+(process_name="clip.exe") \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1196 Control Panel Items]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1196 Control Panel Items\
+\
+indows Control Panel items are utilities that allow users to view and adjust computer settings. Control Panel items are registered executable (.exe) or Control Panel (.cpl) files, the latter are actually renamed dynamic-link library (.dll) files that export a CPlApplet function. \
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/Compiled%20HTML%20File.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="control.exe" AND CommandLine="*.cpl*"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1192 - Spearphishing Link]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1192 - Spearphishing Link\
+\
+Spearphishing with a link is a specific variant of spearphishing. It is different from other forms of spearphishing in that it employs the use of links to download malware contained in email, instead of attaching malicious files to the email itself, to avoid defenses that may inspect email attachments.\
+\
+Link to documentation:  https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Initial%20Access/T1192%20-%20Spearphishing%20Link.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" \
+process_name="C:\\Program Files\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE" \
+AND Image="C:\\Program Files\\Mozilla Firefox\\firefox.exe" \
+AND CommandLine="*www.*"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1193 - Spearphishing Attachment]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1193 - Spearphishing Attachment\
+\
+Spearphishing attachment is a specific variant of spearphishing. Spearphishing attachment is different from other forms of spearphishing in that it employs the use of malware attached to an email. All forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, adversaries attach a file to the spearphishing email and usually rely upon User Execution to gain execution.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Initial%20Access/T1193%20-%20Spearphishing%20Attachment.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="C:\\Program Files\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE" \
+CommandLine="*.hta*" OR CommandLine="*.doc*" \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1179 Hooking]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1179 Hooking\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Persistence/T1179%20Hooking.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="mavinject.exe" OR CommandLine="*/INJECTRUNNING*"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1191 CMSTP]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1191 CMSTP\
+\
+The Microsoft Connection Manager Profile Installer (CMSTP.exe) is a command-line program used to install Connection Manager service profiles.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1191%20CMSTP.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="cmstp.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1118 InstallUtil]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1118 InstallUtil\
+\
+InstallUtil is a command-line utility that allows for installation and uninstallation of resources by executing specific installer components specified in .NET binaries.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1118%20%20InstallUtil.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="InstallUtil.exe" \
+| table _time Image, CommandLine, process_name, User, host
+
+[T1121 Regsvcs Or Regasm]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 6 * * 1
+description = T1121 Regsvcs Or Regasm\
+\
+Regsvcs and Regasm are Windows command-line utilities that are used to register .NET Component Object Model (COM) assemblies. Both are digitally signed by Microsoft.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1121%20Regsvcs%20Or%20Regasm.md
+dispatch.earliest_time = -1w
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="regsvcs.exe" OR process_name="regasm.exe" OR process_name="csc.exe"\
+| table _time Image, CommandLine, process_name, User, host
+
+[T1170 Mshta]
+alert.severity = 4
+alert.suppress = 0
+alert.track = 1
+counttype = number of events
+cron_schedule = 0 * * * *
+description = T1170 Mshta\
+\
+Mshta.exe is a utility that executes Microsoft HTML Applications (HTA). HTA files have the file extension .hta.\
+\
+Link to documentation: https://github.com/JoshuaOnSecurity/SOC-in-a-Box-Searches/blob/master/Searches%20and%20Documentation/ATT%26CK/Execution/T1170%20Mshta.md
+dispatch.earliest_time = -1h
+dispatch.latest_time = now
+enableSched = 1
+quantity = 0
+relation = greater than
+search = source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"\
+process_name="mshta.exe" OR CommandLine="*.hta*"\
+| table _time Image, CommandLine, process_name, User, host
