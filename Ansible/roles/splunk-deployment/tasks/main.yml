@@ -46,7 +46,7 @@
 - name: Create Admin user. 
   template:
     src: admin_credentials.j2
-    dest: '{{ ansible_env.HOME  }}/{{ admin_credential_path }}'
+    dest: '{{ ansible_env.HOME  }}/splunk/etc/system/local/user-seed.conf'
 
 - name: Enable the Splunk API.
   template:
@@ -61,7 +61,7 @@
     seconds: 60
 
 - name: Curl request for Splunk API key. Output key to file.
-  shell: 'curl -k -u  {{ splunk_web_username }}:{{ splunk_web_password }} -X POST https://{{ inventory_hostname }}:8089/services/authorization/tokens? output_mode=json --data name=admin  --data audience=AnsibleToken --data-urlencode expires_on=+30m >> APIresult.txt' 
+  shell: 'curl -k -u  {{ splunk_web_username }}:{{ splunk_web_password }} -X POST https://{{ inventory_hostname }}:8089/services/authorization/tokens?output_mode=json --data name=admin  --data audience=AnsibleToken --data-urlencode expires_on=+30m >> APIresult.txt' 
 
 - name: Regex Token file to get API key.
   shell: 'cat {{ ansible_env.HOME }}/APIresult.txt | grep -Poe "(?<=token\":\")(.*?)[^\"]+"'

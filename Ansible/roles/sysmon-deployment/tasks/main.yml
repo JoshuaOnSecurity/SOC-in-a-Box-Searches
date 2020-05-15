@@ -37,8 +37,7 @@
   when: result.state is not defined or result.name is not defined
 
   #======================================== CLEANUP STAGE ========================================#
-
-  - name: Remove Sysmon download directory.
+- name: Remove Sysmon download directory.
   win_file:
     path: "{{ sysmon_install_location }}"
     state: absent

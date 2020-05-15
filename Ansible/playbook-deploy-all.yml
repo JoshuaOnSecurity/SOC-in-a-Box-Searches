@@ -13,7 +13,7 @@
     - import_role:
        name: splunk-deployment
 
-# Deploy UF and Sysmon
+# Deploy UF
 - hosts: win
   vars_prompt:
  
@@ -38,5 +38,10 @@
 
   tasks:
     - import_role:
-       name: sysmon-deployment
        name: splunk-uf-deployment
+
+#Deploy Sysmon
+- hosts: win
+  tasks:
+    - import_role:
+       name: sysmon-deployment
